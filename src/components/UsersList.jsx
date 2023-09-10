@@ -1,7 +1,7 @@
 import React from 'react'
 import { UserRow } from './UserRow'
 
-export const UsersList = ({ users=[]}) => {
+export const UsersList = ({ users=[],handlerRemoveUser}) => {
     return (<>
         <p>Litado de Usuarios</p>
         <table className="table table-dark table-striped">
@@ -18,7 +18,7 @@ export const UsersList = ({ users=[]}) => {
             <tbody>
                     {
                         users.map(user=>(
-                            <UserRow key={user.id}  user={user}/>
+                            <UserRow key={user.id}  user={user} handlerRemoveUser={handlerRemoveUser}/>
                         ))
                     }
             </tbody>
