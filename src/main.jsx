@@ -5,6 +5,6 @@ import { UsersApp } from './UsersApp'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <UsersApp />
+      <UsersApp />
   </React.StrictMode>,
 )
