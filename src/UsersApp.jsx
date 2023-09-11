@@ -2,6 +2,7 @@
 import { UsersList } from './components/UsersList'
 import { UserForm } from './components/UserForm'
 import { useUsers } from './hooks/useUsers'
+import { UserModalForm } from './components/UserModalForm';
 
 export const UsersApp = () => {
 
@@ -15,34 +16,38 @@ export const UsersApp = () => {
         handlerUserSelectedForm,
         handlerCloseForm,
         handlerOpenForm
-    
+
 
     } = useUsers();
 
-    return (<div className="container my-4">
-        <h2>Users App</h2>
-        <div className="row">
-            <div className="col">
-            {visibleForm ||
-            <button className="btn btn-primary my-2" onClick={handlerOpenForm}>Nuevo Usuario</button>}
-                {users.length === 0 ?
-                    <div className="alert alert-warning">No hay usuarios en el sistema!</div>
-                    : <UsersList
-                        handlerUserSelectedForm={handlerUserSelectedForm}
-                        handlerRemoveUser={handlerRemoveUser}
-                        users={users} />
-                }
-
-            </div>
+    return (
+        <>
             {!visibleForm ||
-            <div className="col">
-                <UserForm
+                <UserModalForm
                     userSelected={userSelected}
                     initialUserForm={initialUserForm}
-                    handlerAddUser={handlerAddUser} 
-                    handlerCloseForm={handlerCloseForm}/>
-            </div>}
+                    handlerAddUser={handlerAddUser}
+                    handlerCloseForm={handlerCloseForm}
+                />}
 
-        </div>
-    </div>)
+            <div className="container my-4">
+                <h2>Users App</h2>
+                <div className="row">
+                    <div className="col">
+                        {visibleForm ||
+                            <button className="btn btn-primary my-2" onClick={handlerOpenForm}>Nuevo Usuario</button>}
+                        {users.length === 0 ?
+                            <div className="alert alert-warning">No hay usuarios en el sistema!</div>
+                            : <UsersList
+                                handlerUserSelectedForm={handlerUserSelectedForm}
+                                handlerRemoveUser={handlerRemoveUser}
+                                users={users} />
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        </>
+    )
 }
