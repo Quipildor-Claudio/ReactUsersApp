@@ -1,39 +1,20 @@
-import React, { useReducer } from 'react'
+
 import { UsersList } from './components/UsersList'
 import { UserForm } from './components/UserForm'
-import { usersReducer } from './reducers/usersReducer';
-const initialUsers = [{
-    id: 1,
-    userName: 'claudio',
-    password: '123',
-    email: 'claudio@gmail.com'
-}];
-
-const initialUserForm = {
-    username: '',
-    password: '',
-    email: '',
-};
+import { useUsers } from './hooks/useUsers'
 
 export const UsersApp = () => {
 
+    const {
+        users,
+        userSelected,
+        initialUserForm,
+        handlerAddUser,
+        handlerRemoveUser,
+        handlerUserSelectedForm
 
-    const [users, dispatch] = useReducer(usersReducer, initialUsers);
+    } = useUsers();
 
-    const handlerAddUser = (user) => {
-        console.log(user);
-        dispatch({
-            type: 'addUser',
-            payload: user,
-        })
-    }
-
-    const handlerRemoveUser = (id) => {
-        dispatch({
-            type: 'removeUser',
-            payload: id,
-        })
-    }
     return (<div className="container my-4">
         <h2>Users App</h2>
         <div className="row">
@@ -41,12 +22,16 @@ export const UsersApp = () => {
 
                 {users.length === 0 ?
                     <div className="alert alert-warning">No hay usuarios en el sistema!</div>
-                    : <UsersList handlerRemoveUser={handlerRemoveUser} users={users} />
+                    : <UsersList
+                        handlerUserSelectedForm={handlerUserSelectedForm}
+                        handlerRemoveUser={handlerRemoveUser}
+                        users={users} />
                 }
 
             </div>
             <div className="col">
                 <UserForm
+                    userSelected={userSelected}
                     initialUserForm={initialUserForm}
                     handlerAddUser={handlerAddUser} />
             </div>

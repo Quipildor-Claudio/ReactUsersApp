@@ -1,7 +1,7 @@
 import React from 'react'
 import { UserRow } from './UserRow'
 
-export const UsersList = ({ users=[],handlerRemoveUser}) => {
+export const UsersList = ({ users = [], handlerRemoveUser, handlerUserSelectedForm }) => {
     return (<>
         <p>Litado de Usuarios</p>
         <table className="table table-dark table-striped">
@@ -16,11 +16,17 @@ export const UsersList = ({ users=[],handlerRemoveUser}) => {
                 </tr>
             </thead>
             <tbody>
-                    {
-                        users.map(user=>(
-                            <UserRow key={user.id}  user={user} handlerRemoveUser={handlerRemoveUser}/>
-                        ))
-                    }
+                {
+                    users.map(({ id, username, email}) => (
+                        <UserRow
+                            key={id}
+                            id={id}
+                            username={username}
+                            email={email}
+                            handlerRemoveUser={handlerRemoveUser}
+                            handlerUserSelectedForm={handlerUserSelectedForm} />
+                    ))
+                }
             </tbody>
         </table>
     </>)
