@@ -1,14 +1,10 @@
 
-import  {  useReducer, useState } from 'react'
+import { useReducer, useState } from 'react'
 import { usersReducer } from '../reducers/usersReducer';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-const initialUsers = [{
-    id: 1,
-    username: 'claudio',
-    password: '123',
-    email: 'claudio@gmail.com'
-}];
+import { findAll, remove, save, update } from '../services/userService';
+const initialUsers = [];
 
 const initialUserForm = {
     id: 0,
@@ -21,12 +17,30 @@ export const useUsers = () => {
 
     const [users, dispatch] = useReducer(usersReducer, initialUsers);
     const [userSelected, setUserSelected] = useState(initialUserForm);
-    const [visibleForm,setVisibleForm]=useState(false);
+    const [visibleForm, setVisibleForm] = useState(false);
     const navigate = useNavigate();
-    const handlerAddUser = (user) => {
+
+    const getUsers = async () => {
+        const result = await findAll();
+        console.log(result);
         dispatch({
-            type:(user.id === 0) ?'addUser':'updateUser',
-            payload: user,
+            type: 'loadingUsers',
+            payload: result.data,
+
+        });
+    }
+
+
+    const handlerAddUser = async (user) => {
+        let response;
+        if (user.id === 0) {
+            response = await save(user);
+        }else{
+            response= await update(user);
+        }
+        dispatch({
+            type: (user.id === 0) ? 'addUser' : 'updateUser',
+            payload: response.data,
         });
         Swal.fire(
             (user.id === 0) ?
@@ -53,7 +67,7 @@ export const useUsers = () => {
             confirmButtonText: 'Si, eliminar!'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                remove(id);
                 dispatch({
                     type: 'removeUser',
                     payload: id,
@@ -89,7 +103,8 @@ export const useUsers = () => {
         handlerRemoveUser,
         handlerUserSelectedForm,
         handlerCloseForm,
-        handlerOpenForm
+        handlerOpenForm,
+        getUsers
 
     }
 }
