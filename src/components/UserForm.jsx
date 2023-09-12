@@ -70,7 +70,12 @@ export const UserForm = ({ handlerAddUser, initialUserForm, userSelected,handler
                 type="submit">
                 {id > 0 ? 'Editar' : 'Crear'}
             </button>
-            <button className="btn btn-primary mx-2" type='button' onClick={()=>onCloseForm()}>Cerrar</button>
+            {!handlerCloseForm || <button
+                className="btn btn-primary mx-2"
+                type="button"
+                onClick={() => onCloseForm()}>
+                Cerrar
+            </button>}
         </form>
     )
 }
