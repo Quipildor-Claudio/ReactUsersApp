@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { UserRow } from './UserRow'
+import { UserContext } from '../context/UserContext';
 
-export const UsersList = ({ users = [], handlerRemoveUser, handlerUserSelectedForm }) => {
+export const UsersList = () => {
+    const{users}=useContext(UserContext);
     return (<>
         <p>Litado de Usuarios</p>
         <table className="table table-dark table-striped">
@@ -23,9 +25,7 @@ export const UsersList = ({ users = [], handlerRemoveUser, handlerUserSelectedFo
                             key={id}
                             id={id}
                             username={username}
-                            email={email}
-                            handlerRemoveUser={handlerRemoveUser}
-                            handlerUserSelectedForm={handlerUserSelectedForm} />
+                            email={email} />
                     ))
                 }
             </tbody>

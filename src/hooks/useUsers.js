@@ -1,5 +1,5 @@
 
-import React, { useEffect, useReducer, useState } from 'react'
+import  {  useReducer, useState } from 'react'
 import { usersReducer } from '../reducers/usersReducer';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
