@@ -4,6 +4,7 @@ import { AuthContext } from "../../auth/context/AuthContext";
 
 export const Navbar = () => {
     const { login, handlerLogout } = useContext(AuthContext);
+    
     return (
         <nav className="navbar  navbar-expand-lg bg-body-tertiary " >
             <div className="container-fluid">
@@ -19,11 +20,12 @@ export const Navbar = () => {
                                 Usuarios
                             </NavLink>
                         </li>
+                        {!login.isAdmin||
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/users/register">
                                 Registrar Usuario
                             </NavLink>
-                        </li>
+                        </li>}
                     </ul>
                 </div>
 

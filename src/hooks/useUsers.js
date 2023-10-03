@@ -25,6 +25,7 @@ export const useUsers = () => {
     const [visibleForm, setVisibleForm] = useState(false);
     const [errors, setErrors] = useState(initialErrors);
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     const getUsers = async () => {
         const result = await findAll();
@@ -38,6 +39,7 @@ export const useUsers = () => {
 
 
     const handlerAddUser = async (user) => {
+        if(!login.isAdmin)return;
         let response;
         try {
 
@@ -81,6 +83,7 @@ export const useUsers = () => {
     }
 
     const handlerRemoveUser = (id) => {
+        if(!login.isAdmin)return;
         Swal.fire({
             title: 'Esta seguro que desea eliminar?',
             text: "Cuidado el usuario sera eliminado!",
